@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pixpie/screens/main_nav_bar_screen.dart';
 import 'package:pixpie/utils/app_strings.dart';
@@ -11,18 +10,18 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _moveToMainNavBar();
+  }
+
   Future<void> _moveToMainNavBar() async {
     Future.delayed(const Duration(seconds: 2));
     if (mounted) {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const MainNavBarScreen()));
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _moveToMainNavBar();
   }
 
   @override
