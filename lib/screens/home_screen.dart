@@ -46,54 +46,57 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: DefaultTabController(
           length: 3,
-          child: NestedScrollView(
-            controller: _scrollController,
-            headerSliverBuilder: (context, innerBoxIsScrolled) {
-              return [
-                SliverAppBar(
-                  floating: true,
-                  snap: true,
-                  title: Container(
-                    height: 50,
-                    width: 50,
-                    decoration: const BoxDecoration(
-                        color: Colors.grey, shape: BoxShape.circle),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: NestedScrollView(
+              controller: _scrollController,
+              headerSliverBuilder: (context, innerBoxIsScrolled) {
+                return [
+                  SliverAppBar(
+                    floating: true,
+                    snap: true,
+                    title: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: const BoxDecoration(
+                          color: Colors.grey, shape: BoxShape.circle),
+                    ),
+                    bottom: const TabBar(
+                      tabs: [
+                        Tab(text: "Suggested"),
+                        Tab(text: "Liked"),
+                        Tab(text: "Library"),
+                      ],
+                      indicatorColor: Colors.redAccent,
+                      indicatorWeight: 4,
+                    ),
+                    centerTitle: true,
+                  )
+                ];
+              },
+              body: TabBarView(
+                children: [
+                  // Suggested tab
+                  MasonryGridView.count(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 12,
+                    crossAxisSpacing: 12,
+                    itemBuilder: (context, index) {
+                      return ImageTile(
+                        index: index,
+                        extent: (index % 2) == 0 ? 300 : 150,
+                        imageSource: AppUrl.getImageUrl(index),
+                      );
+                    },
                   ),
-                  bottom: const TabBar(
-                    tabs: [
-                      Tab(text: "Suggested"),
-                      Tab(text: "Liked"),
-                      Tab(text: "Library"),
-                    ],
-                    indicatorColor: Colors.redAccent,
-                    indicatorWeight: 4,
-                  ),
-                  centerTitle: true,
-                )
-              ];
-            },
-            body: TabBarView(
-              children: [
-                // Suggested tab
-                MasonryGridView.count(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 12,
-                  crossAxisSpacing: 12,
-                  itemBuilder: (context, index) {
-                    return ImageTile(
-                      index: index,
-                      extent: (index % 2) == 0 ? 300 : 150,
-                      imageSource: AppUrl.getImageUrl(index),
-                    );
-                  },
-                ),
 
-                //   Liked tab
-                const SizedBox(),
+                  //   Liked tab
+                  const SizedBox(),
 
-                //   Library tab
-                const SizedBox(),
-              ],
+                  //   Library tab
+                  const SizedBox(),
+                ],
+              ),
             ),
           ),
         ),
