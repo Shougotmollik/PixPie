@@ -12,7 +12,7 @@ class ExplorerScreen extends StatefulWidget {
 }
 
 class _ExplorerScreenState extends State<ExplorerScreen> {
-  int _curentSliderIndex = 0;
+  int _currentSliderIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +29,7 @@ class _ExplorerScreenState extends State<ExplorerScreen> {
                     itemCount: 5,
                     onPageChanged: (value) {
                       setState(() {
-                        _curentSliderIndex = value;
+                        _currentSliderIndex = value;
                       });
                     },
                     itemBuilder: (context, index) {
@@ -69,7 +69,7 @@ class _ExplorerScreenState extends State<ExplorerScreen> {
                               margin: const EdgeInsets.symmetric(horizontal: 6),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: index == _curentSliderIndex
+                                color: index == _currentSliderIndex
                                     ? Colors.white
                                     : Colors.white54,
                               ),
@@ -83,7 +83,11 @@ class _ExplorerScreenState extends State<ExplorerScreen> {
           ),
 
           //   Search bar
-          const SliverAppBar()
+          SliverAppBar(
+            floating: true,
+            snap: true,
+            title: TextFormField()
+          ),
         ];
       },
       body: Padding(
