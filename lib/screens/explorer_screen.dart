@@ -11,6 +11,8 @@ class ExplorerScreen extends StatefulWidget {
   State<ExplorerScreen> createState() => _ExplorerScreenState();
 }
 
+final TextEditingController _searchTEController = TextEditingController();
+
 class _ExplorerScreenState extends State<ExplorerScreen> {
   int _currentSliderIndex = 0;
   @override
@@ -19,75 +21,8 @@ class _ExplorerScreenState extends State<ExplorerScreen> {
         body: NestedScrollView(
       headerSliverBuilder: (context, innerBoxIsScrolled) {
         return [
-          //   Image Slider
-          SliverAppBar(
-            expandedHeight: 320,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Stack(
-                children: [
-                  PageView.builder(
-                    itemCount: 5,
-                    onPageChanged: (value) {
-                      setState(() {
-                        _currentSliderIndex = value;
-                      });
-                    },
-                    itemBuilder: (context, index) {
-                      return Stack(
-                        fit: StackFit.expand,
-                        children: [
-                          CachedNetworkImage(
-                            imageUrl: AppUrl.getSliderImageUrl(index),
-                            fit: BoxFit.cover,
-                          ),
-                          Container(
-                            decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [Colors.black, Colors.transparent],
-                                begin: Alignment.bottomCenter,
-                                end: Alignment.topCenter,
-                              ),
-                            ),
-                          )
-                        ],
-                      );
-                    },
-                  ),
-                  Positioned(
-                      left: 0,
-                      right: 0,
-                      bottom: 20,
-                      child: Wrap(
-                        alignment: WrapAlignment.center,
-                        children: List.generate(
-                          5,
-                          (index) {
-                            return AnimatedContainer(
-                              duration: const Duration(milliseconds: 300),
-                              width: 08,
-                              height: 08,
-                              margin: const EdgeInsets.symmetric(horizontal: 6),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: index == _currentSliderIndex
-                                    ? Colors.white
-                                    : Colors.white54,
-                              ),
-                            );
-                          },
-                        ),
-                      ))
-                ],  
-              ),
-            ),
-          ),
-
-          //   Search bar
-          SliverAppBar(
-            floating: true,
-            snap: true,
-            title: TextFormField()
-          ),
+          _buildWallpaperSlider(),
+          _buildSearchBar(),
         ];
       },
       body: Padding(
@@ -106,5 +41,97 @@ class _ExplorerScreenState extends State<ExplorerScreen> {
         ),
       ),
     ));
+  }
+
+  Widget _buildSearchBar() {
+    return SliverAppBar(
+        floating: true,
+        snap: true,
+        title: Container(
+          height: 40,
+          decoration: BoxDecoration(
+              color: Colors.grey.shade300,
+              borderRadius: const BorderRadius.all(Radius.circular(12))),
+          child: TextFormField(
+            controller: _searchTEController,
+            decoration: const InputDecoration(
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  gapPadding: 12,
+                ),
+                contentPadding: EdgeInsets.all(12),
+                prefixIcon: Icon(Icons.search),
+                prefixIconColor: Colors.black38,
+                hintText: 'Search Wallpaper ...',
+                hintStyle: TextStyle(
+                  color: Colors.black38,
+                  fontSize: 14,
+                )),
+          ),
+        ));
+  }
+
+  Widget _buildWallpaperSlider() {
+    return SliverAppBar(
+      expandedHeight: 320,
+      flexibleSpace: FlexibleSpaceBar(
+        background: Stack(
+          children: [
+            PageView.builder(
+              itemCount: 5,
+              onPageChanged: (value) {
+                setState(() {
+                  _currentSliderIndex = value;
+                });
+              },
+              itemBuilder: (context, index) {
+                return Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    CachedNetworkImage(
+                      imageUrl: AppUrl.getSliderImageUrl(index),
+                      fit: BoxFit.cover,
+                    ),
+                    Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Colors.black, Colors.transparent],
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                        ),
+                      ),
+                    )
+                  ],
+                );
+              },
+            ),
+            Positioned(
+                left: 0,
+                right: 0,
+                bottom: 20,
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  children: List.generate(
+                    5,
+                    (index) {
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        width: 08,
+                        height: 08,
+                        margin: const EdgeInsets.symmetric(horizontal: 6),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: index == _currentSliderIndex
+                              ? Colors.white
+                              : Colors.white54,
+                        ),
+                      );
+                    },
+                  ),
+                ))
+          ],
+        ),
+      ),
+    );
   }
 }
