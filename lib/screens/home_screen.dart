@@ -78,6 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   // Suggested tab
                   MasonryGridView.count(
+                    padding: const EdgeInsets.only(top: 12),
                     crossAxisCount: 2,
                     mainAxisSpacing: 12,
                     crossAxisSpacing: 12,
