@@ -25,8 +25,9 @@ class _ExplorerScreenState extends State<ExplorerScreen> {
           _buildSearchBar(),
         ];
       },
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      body: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.all(8),
         child: MasonryGridView.count(
           crossAxisCount: 2,
           mainAxisSpacing: 12,
@@ -44,36 +45,45 @@ class _ExplorerScreenState extends State<ExplorerScreen> {
   }
 
   Widget _buildSearchBar() {
-    return SliverAppBar(
-        floating: true,
-        snap: true,
-        title: Container(
-          height: 40,
-          decoration: BoxDecoration(
-              color: Colors.grey.shade300,
-              borderRadius: const BorderRadius.all(Radius.circular(12))),
-          child: TextFormField(
-            controller: _searchTEController,
-            decoration: const InputDecoration(
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  gapPadding: 12,
-                ),
-                contentPadding: EdgeInsets.all(12),
-                prefixIcon: Icon(Icons.search),
-                prefixIconColor: Colors.black38,
-                hintText: 'Search Wallpaper ...',
-                hintStyle: TextStyle(
-                  color: Colors.black38,
-                  fontSize: 14,
-                )),
-          ),
-        ));
+    return MediaQuery.removePadding(
+      context: context,
+      removeTop: true,
+      child: SliverAppBar(
+          floating: true,
+          snap: true,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+            top: Radius.circular(12),
+          )),
+          title: Container(
+            height: 40,
+            decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: const BorderRadius.all(Radius.circular(12))),
+            child: TextFormField(
+              controller: _searchTEController,
+              decoration: const InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    gapPadding: 12,
+                  ),
+                  contentPadding: EdgeInsets.all(12),
+                  prefixIcon: Icon(Icons.search),
+                  prefixIconColor: Colors.black38,
+                  hintText: 'Search Wallpaper ...',
+                  hintStyle: TextStyle(
+                    color: Colors.black38,
+                    fontSize: 14,
+                  )),
+            ),
+          )),
+    );
   }
 
   Widget _buildWallpaperSlider() {
     return SliverAppBar(
       expandedHeight: 320,
+      backgroundColor: Colors.black54,
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
           children: [
